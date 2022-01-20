@@ -6,15 +6,15 @@ import { RezerveCarsDto } from './dto/reservecars.dto'
 @Controller()
 export class CarsController {
     constructor(private readonly carService: CarService) { }
-    @Get('order')
+    @Post('order')
     getorder(@Body() ordermonth : OrderMonth){
         return this.carService.orderm(ordermonth);
     }
-    @Get()
+    @Post('check')
     getHello(@Body() reservecarsdto: RezerveCarsDto) {
         return this.carService.Getstatus(reservecarsdto.IDCar, reservecarsdto.DateStart, reservecarsdto.DateEnd);
     }
-    @Post()
+    @Post('reserve')
     postHello(@Body() reservecarsdto: RezerveCarsDto) {
         //console.log(reservecarsdto)
         return this.carService.Rezervecar(reservecarsdto.IDCar, reservecarsdto.DateStart, reservecarsdto.DateEnd);

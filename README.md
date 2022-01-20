@@ -61,11 +61,11 @@ $ npm run start
 } 
 Отправляем
 Типы запроса и ответ на них: 
-- GET 
+- Post('check') 
     в ответ если все ок, вернет: Rezerv / Not Rezerv.
-- Post
+- Post('reserve') 
     в ответ если все ок, вернет: (I have reserved a car, everything is fine) / (The car has already been reserved, choose another car or dates).
-- Post/Get
+- Post
     Если дата начала брони или конца выподает на выходные то вернет: The beginning or end of the lease should fall on weekdays
     Если дата не валидная: Dates are not correctly selected
     Если длина брони больше 30 дней: It is not possible to reserve for more than 30 days
@@ -79,7 +79,7 @@ $ npm run start
 ## Пример работы для бронирования авто. 
 ```bash
   #В независимости от типа запроса, мы проверяем connect к бд и наличие табл cars, если нет соедениения то создаем, и если нет table тоже создаем.
-  Принимаем GET с телом :
+  Принимаем Post('/check') с телом :
   {
     "IDCar": 1,
     "DateStart": "2022-01-20",
@@ -91,7 +91,7 @@ $ npm run start
  ``` 
  ![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/Get.gif)    
  ```bash
-  Принимаем Post с телом :
+  Принимаем Post('/reserve') с телом :
   {
     "IDCar": 1,
     "DateStart": "2022-01-20",
@@ -108,7 +108,7 @@ $ npm run start
 
 ## Отчет средней загрузки автомобилей за месяц, по каждому авто и по всем.
 ```bash
-Точка входа одна Get на '/order'. 
+Точка входа одна Post на '/order'. 
 В тело помещаем JSON
 {
     "IDCar": 1,
