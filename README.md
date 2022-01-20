@@ -89,7 +89,7 @@ $ npm run start
   Проверяем валидность дат, id автомобиля, срок аренды. Если все ок, то делаем select в бд и если записей в бд нет, то считаем что ссесии аренды нет для данных критериев.
   Возвращаем Not Rezerv.
  ``` 
- ![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/Get.gif)    
+ ![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/Get_.gif)    
  ```bash
   Принимаем Post('/reserve') с телом :
   {
@@ -101,7 +101,7 @@ $ npm run start
   Проверяем валидность дат, id автомобиля, срок аренды. Если все ок, то проверяем наличие ссесии для этих критериев, работает как и для GET, если ссесии нет, то рассчитываем стоимость и делаем Insert в бд, куда пишем ID(порядковый номер записи), IDcar(ID машины), DateStart(Дата начала аренды), DateEnd(Дата конца аренды), Price(стоимость аренды за весь срок). 
   Возвращаем если все ок(I have reserved a car, everything is fine).
 ```
-![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/Post.gif)    
+![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/Post_.gif)    
 ## Записи в БД
 
 ![Image](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/BD.png)
@@ -123,7 +123,7 @@ IDCar нужно только если берем статистику по од
 Запрос к бд один и тот же.
 Если запрос не нашел записей удовл условиям, то возвращаем 0%, иначе возвращаем что вернул select
 ```
-![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/report.gif)   
+![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/report_.gif)   
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
