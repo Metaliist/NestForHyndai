@@ -74,7 +74,15 @@ export class CarService {
         }
     }
     private async Rezerved(IDcar: number, DateStart: Date, DateEnd: Date, Price: number) {
-
+        return await client
+            .query(Requests.find(e => e.req == 'Rezerve car'), [IDcar, DateStart, DateEnd, Price])
+            .then(() => {
+                return true;
+            })
+            .catch(err => {
+                console.log(err)
+                throw new Error(err);
+            })
     }
     async Getstatus(IDcar: number, DateStart: Date, DateEnd: Date) {
         if (!this.checkid(IDcar)) {
@@ -120,6 +128,15 @@ export class CarService {
 
     }
     private async SumPrice(countday: number) {
+        return await client
+            .query(Requests.find(e => e.req == 'Sum Price'), [countday])
+            .then((res) => {
+                return res.rows[0].sum;
+            })
+            .catch(err => {
+                console.log(err)
+                throw new Error(err);
+            })
     }
     private convertDate(DateStart: Date, DateEnd: Date) {
         if
@@ -136,13 +153,66 @@ export class CarService {
         return idcar < 5 && idcar >= 0;
     }
     async orderm(_ordermonth: OrderMonth) {
+        if (!client._connected) {
+            client.connect();
+        }
+        await this.CheckTable()
+            .catch(err => { throw new Error(err); });
+        let Month;
+        if (typeof (_ordermonth.Month) === "string" || typeof (_ordermonth.Month) === 'number') {
+            Month = new Date(_ordermonth.Month);
+        }
+        if (_ordermonth.all) {
+            return this.ordermonth(Month);
+        } else {
+            return this.ordermonthid(_ordermonth.IDCar, Month);
+        }
     }
     async ordermonthid(idcar: number, month: Date) {
         console.log(month)
         if (!this.checkid(idcar)) {
             return "The identification car is specified more than there is in the park"
         }
+        let req = Requests.find(e => e.req == 'Order month');
+        req.text = req.text.replace('1=1', '"IDCar" = $2');
+        return await client
+            .query(req, [month, idcar])
+            .then((res) => {
+               // console.log(res)
+                let _res;
+                if (res.rows.length > 0) {
+                    _res = res.rows[0];
+                }
+                else {
+                    _res = { [req.ret[0]]: idcar, [req.ret[1]]: 0 }
+                }
+                return _res;
+            })
+            .catch(err => {
+                console.log(err)
+                throw new Error(err);
+            })
     }
     async ordermonth(month: Date) {
+        let req = Requests.find(e => e.req == 'Order month');
+        req.text = req.text.replace('"IDCar" = $2', '1=1');
+        return await client
+            .query(req, [month])
+            .then((res) => {
+                //console.log(res.rows.length)
+                let _res;
+                if (res.rows.length > 0) {
+                    _res = res.rows;
+                }
+                else {
+                    _res = { [req.ret[1]]: 0 }
+                }
+                return _res;
+                //return res.rows[0].sum;
+            })
+            .catch(err => {
+                console.log(err)
+                throw new Error(err);
+            })
     }
 }
