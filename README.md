@@ -49,7 +49,7 @@ SQL запросы для работы с БД хранятся в [./cars/Reque
 
 $ npm run start
 ```
-## Описание действий
+## Описание действий бронирования.
 ```bash
 После открыть программу для отправки GET/POST запроса.Для примера воспользуемся POSTMAN.
 -В строке адресс пишем - [localhost:3000/]
@@ -76,10 +76,10 @@ $ npm run start
     Сервис принимает Post и Get запросы и работает с бд.
 
 ```
-## Пример работы
+## Пример работы для бронирования авто. 
 ```bash
   #В независимости от типа запроса, мы проверяем connect к бд и наличие табл cars, если нет соедениения то создаем, и если нет table тоже создаем.
-  Принимаем GET на главный роут с телом :
+  Принимаем GET с телом :
   {
     "IDCar": 1,
     "DateStart": "2022-01-20",
@@ -91,7 +91,7 @@ $ npm run start
  ``` 
  ![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/Get.gif)    
  ```bash
-  Принимаем Post  с телом :
+  Принимаем Post с телом :
   {
     "IDCar": 1,
     "DateStart": "2022-01-20",
@@ -102,8 +102,27 @@ $ npm run start
   Возвращаем если все ок(I have reserved a car, everything is fine).
 ```
 ![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/Post.gif)    
-Записи в БД
+## Записи в БД
+
 ![Image](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/BD.png)
+
+## Отчет средней загрузки автомобилей за месяц, по каждому авто и по всем.
+```bash
+Точка входа одна Get на '/order'. 
+В тело помещаем JSON
+{
+    "IDCar": 1,
+    "Month": "2022-05",
+    "all": false 
+}
+Флаг all Отвечает за тип отчета, по одному авто или по всем.
+Month передаем год-мес
+IDCar нужно только если берем статистику по одному авто.
+Проверяем существование табл cars, если ее нет то создаем. Если по одному авто, то проверяем валидность IDcar.
+Дальше уже по флагу смотрим запускаем разные функ.
+Запрос к бд один и тот же.
+Если запрос не нашел записей удовл условиям, то возвращаем 0%, иначе возвращаем что вернул select
+```
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
