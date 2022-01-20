@@ -36,7 +36,7 @@ ALTER TABLE IF EXISTS public."Price"
     OWNER to test;
 
 ```
-![Image](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/price.png)    
+![Image](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/price.png)    
 ```bash
 База cars создается при первом запросе GET/POST 
 SQL запросы для работы с БД хранятся в [./cars/Request.ts]
@@ -88,7 +88,9 @@ $ npm run start
   Проверяем существование табл cars, если ее нет то создаем.
   Проверяем валидность дат, id автомобиля, срок аренды. Если все ок, то делаем select в бд и если записей в бд нет, то считаем что ссесии аренды нет для данных критериев.
   Возвращаем Not Rezerv.
-  
+ ``` 
+ ![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/Get.gif)    
+ ```bash
   Принимаем Post  с телом :
   {
     "IDCar": 1,
@@ -99,6 +101,9 @@ $ npm run start
   Проверяем валидность дат, id автомобиля, срок аренды. Если все ок, то проверяем наличие ссесии для этих критериев, работает как и для GET, если ссесии нет, то рассчитываем стоимость и делаем Insert в бд, куда пишем ID(порядковый номер записи), IDcar(ID машины), DateStart(Дата начала аренды), DateEnd(Дата конца аренды), Price(стоимость аренды за весь срок). 
   Возвращаем если все ок(I have reserved a car, everything is fine).
 ```
+![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/Post.gif)    
+Записи в БД
+![Image](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/BD.png)
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
