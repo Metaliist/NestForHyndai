@@ -178,7 +178,6 @@ export class CarService {
         return await client
             .query(req, [month, idcar])
             .then((res) => {
-               // console.log(res)
                 let _res;
                 if (res.rows.length > 0) {
                     _res = res.rows[0];
@@ -199,7 +198,6 @@ export class CarService {
         return await client
             .query(req, [month])
             .then((res) => {
-                //console.log(res.rows.length)
                 let _res;
                 if (res.rows.length > 0) {
                     _res = res.rows;
@@ -208,7 +206,6 @@ export class CarService {
                     _res = { [req.ret[1]]: 0 }
                 }
                 return _res;
-                //return res.rows[0].sum;
             })
             .catch(err => {
                 console.log(err)
