@@ -14,13 +14,13 @@ export class CarsController {
     }
     @Post('check')
     @ApiBody({ type: RezerveCarsDto })
-    getHello(@Body() reserveCarsDto: RezerveCarsDto) {
-        return this.carService.getStatus(reserveCarsDto.idCar, reserveCarsDto.dateStart, reserveCarsDto.dateEnd);
+    getHello(@Body() reservecarsdto: RezerveCarsDto) {
+        return this.carService.Getstatus(reservecarsdto.IDCar, reservecarsdto.DateStart, reservecarsdto.DateEnd);
     }
     @Post('reserve')
     @ApiBody({ type: RezerveCarsDto })
     postHello(@Body() reservecarsdto: RezerveCarsDto) {
         //console.log(reservecarsdto)
-        return this.carService.rezerveCar(reservecarsdto.idCar, reservecarsdto.dateStart, reservecarsdto.dateEnd);
+        return this.carService.Rezervecar(reservecarsdto.IDCar, reservecarsdto.DateStart, reservecarsdto.DateEnd);
     }
 }

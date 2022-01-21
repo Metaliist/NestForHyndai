@@ -15,12 +15,12 @@ export class CarsController {
     @Post('check')
     @ApiBody({ type: RezerveCarsDto })
     getHello(@Body() reserveCarsDto: RezerveCarsDto) {
-        return this.carService.getStatus(reserveCarsDto.idCar, reserveCarsDto.dateStart, reserveCarsDto.dateEnd);
+        return this.carService.Getstatus(reserveCarsDto.IDCar, reserveCarsDto.dateStart, reserveCarsDto.dateEnd);
     }
     @Post('reserve')
     @ApiBody({ type: RezerveCarsDto })
     postHello(@Body() reservecarsdto: RezerveCarsDto) {
         //console.log(reservecarsdto)
-        return this.carService.rezerveCar(reservecarsdto.idCar, reservecarsdto.dateStart, reservecarsdto.dateEnd);
+        return this.carService.Rezervecar(reservecarsdto.IDCar, reservecarsdto.dateStart, reservecarsdto.dateEnd);
     }
 }

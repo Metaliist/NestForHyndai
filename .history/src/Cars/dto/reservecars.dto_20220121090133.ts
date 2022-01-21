@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class RezerveCarsDto {
     @ApiProperty()
-    readonly idCar: number;
+    readonly IDCar: number;
     @ApiProperty({default:'2022-01-02'})
-    readonly dateStart: Date;
+    readonly DateStart: Date;
     @ApiProperty({default:'2022-01-06'})
-    readonly dateEnd: Date;
+    readonly DateEnd: Date;
 }

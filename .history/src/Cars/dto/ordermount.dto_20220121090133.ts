@@ -3,9 +3,9 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class OrderMonth {
     @ApiProperty()
-    readonly idCar: number;
+    readonly IDCar: number;
     @ApiProperty({default:'2022-01'})
-    readonly month: string;
+    readonly Month: string;
     @ApiProperty()
     readonly all: boolean;
 }
