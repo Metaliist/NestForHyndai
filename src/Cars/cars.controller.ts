@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { CarService } from './cars.services';
-import { OrderService } from './order.services';
+import { CarService } from './cars.service';
+import { OrderService } from './order.service';
 import { OrderMonth } from './dto/ordermount.dto';
 import { RezerveCarsDto } from './dto/reservecars.dto'
 @ApiTags('cars')
