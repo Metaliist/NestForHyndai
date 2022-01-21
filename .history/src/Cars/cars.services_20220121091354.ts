@@ -98,15 +98,15 @@ export class CarService {
         DateStart = d.DateStart;
         DateEnd = d.DateEnd;
         let Price: number;
+        await this.Calcprise(DateStart, DateEnd).then(price => {
+            Price = price;
+        });
         if (DateStart < DateEnd) {
             if ((+DateEnd - +DateStart) / (60 * 60 * 24 * 1000) > 30) {
                 return "It is not possible to reserve for more than 30 days";
             }
             if (DateStart.getDay() > 0 && DateStart.getDay() < 6) {
-                return await this.Getstatuscar(IDcar, DateStart, DateEnd).then(async res => {
-                    await this.Calcprise(DateStart, DateEnd).then(price => {
-                        Price = price;
-                    });
+                return await this.Getstatuscar(IDcar, DateStart, DateEnd).then(res => {
                     switch (res) {
                         case false: return "Not Rezerv. Rental price: " + Price;
                         case true: return "Rezerv";
