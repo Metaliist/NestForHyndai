@@ -1,5 +1,5 @@
 export const req = [{
-    req: 'Create tableCars',
+    req: 'Create table',
     text: `CREATE TABLE public.cars
     (
         "ID" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 0 MAXVALUE 2147483647 CACHE 1 ),
@@ -60,7 +60,7 @@ export const req = [{
 },
 {
     req:"Create TablePrice",
-    text:`CREATE TABLE IF NOT EXISTS public."Price"
+    test:`CREATE TABLE public."Price"
     (
         "ID" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 30 CACHE 1 ),
         "PriceDay" integer NOT NULL,

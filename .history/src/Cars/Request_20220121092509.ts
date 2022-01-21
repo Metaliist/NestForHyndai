@@ -1,5 +1,5 @@
 export const req = [{
-    req: 'Create tableCars',
+    req: 'Create table',
     text: `CREATE TABLE public.cars
     (
         "ID" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 0 MAXVALUE 2147483647 CACHE 1 ),
@@ -54,13 +54,8 @@ export const req = [{
     ret:['IDCar','Day%OnMonth']
 },
 {
-    req:"Check Table Price",
-    text:`SELECT count(*)
-	FROM public."Price";`
-},
-{
-    req:"Create TablePrice",
-    text:`CREATE TABLE IF NOT EXISTS public."Price"
+    req:"Create Table Price",
+    test:`CREATE TABLE IF NOT EXISTS public."Price"
     (
         "ID" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 30 CACHE 1 ),
         "PriceDay" integer NOT NULL,
@@ -77,37 +72,36 @@ export const req = [{
     text:`INSERT INTO public."Price"(
         "PriceDay")
     
-        VALUES
-        (1000),
-        (1000),
-        (1000),
-        (1000),
-        (950),
-        (950),
-        (950),
-        (950),
-        (950),
-        (900),
-        (900),
-        (900),
-        (900),
-        (900),
-        (900),
-        (900),
-        (900),
-        (850),
-        (850),
-        (850),
-        (850),
-        (850),
-        (850),
-        (850),
-        (850),
-        (850),
-        (850),
-        (850),
-        (850),
-        (850)`
+        VALUES(1000)
+        VALUES(1000)
+        VALUES(1000)
+        VALUES(1000)
+        VALUES(950)
+        VALUES(950)
+        VALUES(950)
+        VALUES(950)
+        VALUES(950)
+        VALUES(900)
+        VALUES(900)
+        VALUES(900)
+        VALUES(900)
+        VALUES(900)
+        VALUES(900)
+        VALUES(900)
+        VALUES(900)
+        VALUES(850)
+        VALUES(850)
+        VALUES(850)
+        VALUES(850)
+        VALUES(850)
+        VALUES(850)
+        VALUES(850)
+        VALUES(850)
+        VALUES(850)
+        VALUES(850)
+        VALUES(850)
+        VALUES(850)
+        VALUES(850)`
 }
 
 ];

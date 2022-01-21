@@ -60,7 +60,7 @@ export const req = [{
 },
 {
     req:"Create TablePrice",
-    text:`CREATE TABLE IF NOT EXISTS public."Price"
+    test:`CREATE TABLE public.Price
     (
         "ID" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 30 CACHE 1 ),
         "PriceDay" integer NOT NULL,
@@ -69,7 +69,7 @@ export const req = [{
     
     TABLESPACE pg_default;
     
-    ALTER TABLE IF EXISTS public."Price"
+    ALTER TABLE IF EXISTS public.Price
         OWNER to test;`
 },
 {

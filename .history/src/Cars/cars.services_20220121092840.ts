@@ -19,7 +19,7 @@ export class CarService {
     //The method creates a table with a query
     private async CreateTable() {
         client
-            .query(Requests.find(e => e.req == 'Create tableCars'))
+            .query(Requests.find(e => e.req == 'Create table'))
             .catch(e => {
                 console.log(e)
                 throw new Error(e);
@@ -28,32 +28,24 @@ export class CarService {
     private async CheckTablePrice() {
         return await client
             .query(Requests.find(e => e.req == 'Check Table Price'))
-            .then(async res => {
-                if (Object.values(res.rows[0])[0] == 0) {
-                    return await this.FillTablePrice();
-                }
-            })
             .catch(async e => {
                 if (e.table == undefined) {
-                    return await this.CreateTablePrice().then(async () => {
-                        return await this.FillTablePrice();
-                    });
+                    await this.CreateTablePrice();
                 }
             })
     }
     //The method creates a table with a query
     private async CreateTablePrice() {
         return await client
-            .query(Requests.find(e => e.req == 'Create TablePrice'))
-            .then(res => { return res; })
-            .catch(e => {
-                console.log('err create' + e)
-                throw new Error(e);
+            .query(Requests.find(e => e.req == 'Create Table Price'))
+            .then(async () => {
+                return await client
+                    .query(Requests.find(e => e.req == 'Fill Table Price'))
+                    .catch(e => {
+                        console.log(e)
+                        throw new Error(e);
+                    })
             })
-    }
-    private async FillTablePrice() {
-        return await client
-            .query(Requests.find(e => e.req == 'Fill Table Price'))
             .catch(e => {
                 console.log(e)
                 throw new Error(e);
