@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Car } from './cars';
 import { client } from './connectDB'
-
+import { OrderMonth } from './dto/ordermount.dto';
 import { req as Requests } from './Request'
 @Injectable()
 export class CarService {
     private readonly car: Car = new Car(0, 0, new Date('2022-01-01'), new Date('2022-01-03'));
     //The method checks the existence of the table, via a query
-     async checkTable() {
+    private async checkTable() {
         return client
             .query(Requests.find(e => e.req == 'Check creation'))
             .catch(async e => {
@@ -17,7 +17,7 @@ export class CarService {
             })
     }
     //The method creates a table with a query
-     async createTable() {
+    private async createTable() {
         client
             .query(Requests.find(e => e.req == 'Create tableCars'))
             .catch(e => {
@@ -25,7 +25,7 @@ export class CarService {
                 throw new Error(e);
             })
     }
-     async checkTablePrice() {
+    private async checkTablePrice() {
         return await client
             .query(Requests.find(e => e.req == 'Check Table Price'))
             .then(async res => {
@@ -42,7 +42,7 @@ export class CarService {
             })
     }
     //The method creates a table with a query
-     async createTablePrice() {
+    private async createTablePrice() {
         return await client
             .query(Requests.find(e => e.req == 'Create TablePrice'))
             .then(res => { return res; })
@@ -51,7 +51,7 @@ export class CarService {
                 throw new Error(e);
             })
     }
-     async fillTablePrice() {
+    private async fillTablePrice() {
         return await client
             .query(Requests.find(e => e.req == 'Fill Table Price'))
             .catch(e => {
@@ -198,7 +198,7 @@ export class CarService {
         }
         return { dateStart: dateStart, dateEnd: dateEnd }
     }
-     checkID(idCar: number): boolean {
+    private checkID(idCar: number): boolean {
         return idCar < 5 && idCar >= 0; //Checking the machine ID
     }
 }

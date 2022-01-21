@@ -4,7 +4,7 @@ import { CarService } from './cars/cars.services';
 import { OrderService } from './Cars/order.services';
 
 @Module({
-  imports: [],
+  imports: [CarService],
   controllers: [CarsController],
   providers: [CarService,OrderService],
 })

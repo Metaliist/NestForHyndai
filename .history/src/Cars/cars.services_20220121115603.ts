@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Car } from './cars';
 import { client } from './connectDB'
-
 import { req as Requests } from './Request'
 @Injectable()
 export class CarService {

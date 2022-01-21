@@ -1,18 +1,17 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { CarService } from './cars.services';
-import { OrderService } from './order.services';
+import {OrderService} from './orders.services';
 import { OrderMonth } from './dto/ordermount.dto';
 import { RezerveCarsDto } from './dto/reservecars.dto'
 @ApiTags('cars')
 @Controller()
 export class CarsController {
-    constructor(private readonly carService: CarService, private readonly orderService: OrderService) { }
-
+    constructor(private readonly carService: CarService) { }
     @Post('order')
     @ApiBody({ type: OrderMonth })
     getorder(@Body() ordermonth: OrderMonth) {
-        return this.orderService.orderm(ordermonth);
+        return this.carService.orderm(ordermonth);
     }
     @Post('check')
     @ApiBody({ type: RezerveCarsDto })

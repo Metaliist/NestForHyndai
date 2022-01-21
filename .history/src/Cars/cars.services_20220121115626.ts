@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Car } from './cars';
 import { client } from './connectDB'
-
 import { req as Requests } from './Request'
 @Injectable()
 export class CarService {
-    private readonly car: Car = new Car(0, 0, new Date('2022-01-01'), new Date('2022-01-03'));
+   // private readonly car: Car = new Car(0, 0, new Date('2022-01-01'), new Date('2022-01-03'));
     //The method checks the existence of the table, via a query
      async checkTable() {
         return client
