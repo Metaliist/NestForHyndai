@@ -87,8 +87,9 @@ export class CarService {
             }
             if (dateStart.getDay() > 0 && dateStart.getDay() < 6) {
                 return await this.getStatusCar(idCar, dateStart, dateEnd).then(async res => {
-                    await this.calcPrise(dateStart, dateEnd).then(_price => {
-                        price = _price;
+                    await this.calcPrise(dateStart, dateEnd).then(price => {
+                        price = price;
+                        console.log(price);
                     });
                     switch (res) {
                         case false: return "Not Rezerv. Rental price: " + price;

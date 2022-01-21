@@ -89,6 +89,7 @@ export class CarService {
                 return await this.getStatusCar(idCar, dateStart, dateEnd).then(async res => {
                     await this.calcPrise(dateStart, dateEnd).then(_price => {
                         price = _price;
+
                     });
                     switch (res) {
                         case false: return "Not Rezerv. Rental price: " + price;

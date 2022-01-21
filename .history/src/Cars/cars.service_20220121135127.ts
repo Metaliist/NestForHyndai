@@ -80,18 +80,19 @@ export class CarService {
         let d = this.convertDate(dateStart, dateEnd);
         dateStart = d.dateStart;
         dateEnd = d.dateEnd;
-        let price: number = 0;
+        let price_: number = 0;
         if (dateStart < dateEnd) {
             if ((+dateEnd - +dateStart) / (60 * 60 * 24 * 1000) > 30) {
                 return "It is not possible to reserve for more than 30 days";
             }
             if (dateStart.getDay() > 0 && dateStart.getDay() < 6) {
                 return await this.getStatusCar(idCar, dateStart, dateEnd).then(async res => {
-                    await this.calcPrise(dateStart, dateEnd).then(_price => {
-                        price = _price;
+                    await this.calcPrise(dateStart, dateEnd).then(price => {
+                        price_ = price;
+                        console.log(price_);
                     });
                     switch (res) {
-                        case false: return "Not Rezerv. Rental price: " + price;
+                        case false: return "Not Rezerv. Rental price: " + price_;
                         case true: return "Rezerv";
                     }
                 });
