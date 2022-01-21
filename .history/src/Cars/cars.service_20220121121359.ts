@@ -3,11 +3,62 @@ import { Car } from './cars';
 import { client } from './connectDB'
 
 import { req as Requests } from './Request'
-import { WTableService } from './wtable.service';
 @Injectable()
 export class CarService {
     private readonly car: Car = new Car(0, 0, new Date('2022-01-01'), new Date('2022-01-03'));
-    constructor(private readonly wtableService: WTableService) { }
+    //The method checks the existence of the table, via a query
+     async checkTable() {
+        return client
+            .query(Requests.find(e => e.req == 'Check creation'))
+            .catch(async e => {
+                if (e.table == undefined) {
+                    await this.createTable();
+                }
+            })
+    }
+    //The method creates a table with a query
+     async createTable() {
+        client
+            .query(Requests.find(e => e.req == 'Create tableCars'))
+            .catch(e => {
+                console.log(e)
+                throw new Error(e);
+            })
+    }
+     async checkTablePrice() {
+        return await client
+            .query(Requests.find(e => e.req == 'Check Table Price'))
+            .then(async res => {
+                if (Object.values(res.rows[0])[0] == 0) {
+                    return await this.fillTablePrice();
+                }
+            })
+            .catch(async e => {
+                if (e.table == undefined) {
+                    return await this.createTablePrice().then(async () => {
+                        return await this.fillTablePrice();
+                    });
+                }
+            })
+    }
+    //The method creates a table with a query
+     async createTablePrice() {
+        return await client
+            .query(Requests.find(e => e.req == 'Create TablePrice'))
+            .then(res => { return res; })
+            .catch(e => {
+                console.log('err create' + e)
+                throw new Error(e);
+            })
+    }
+     async fillTablePrice() {
+        return await client
+            .query(Requests.find(e => e.req == 'Fill Table Price'))
+            .catch(e => {
+                console.log(e)
+                throw new Error(e);
+            })
+    }
     //The method makes select records from the table and if there is a record, then there is a session, and the car is busy
     private async checkCar(idCar: number, dateStart: Date, dateEnd: Date) {
         return await client
@@ -109,9 +160,9 @@ export class CarService {
         if (!client._connected) {
             client.connect();
         }
-        await this.wtableService.checkTable()
+        await this.checkTable()
             .catch(err => { throw new Error(err); });
-        await this.wtableService.checkTablePrice().catch(err => { throw new Error(err); });
+        await this.checkTablePrice().catch(err => { throw new Error(err); });
         return await this.checkCar(idCar, dateStart, dateEnd).then(res => {
             return res.rezerve;
         });
