@@ -9,7 +9,7 @@ export class CarService {
     //The method checks the existence of the table, via a query
     private async CheckTable() {
         return client
-            .query(Requests.find(e => e.req == 'Check creation'))
+            .query(Requests.find(e => e.req == 'Check creation')) 
             .catch(async e => {
                 if (e.table == undefined) {
                     await this.CreateTable();
@@ -63,7 +63,7 @@ export class CarService {
                     switch (res) {
                         case false: return await this.Rezerved(IDcar, DateStart, DateEnd, Price).then((res) => {
                             if (res) {
-                                return 'I have reserved a car, everything is fine.Rental price: ' + Price;
+                                return 'I have reserved a car, everything is fine';
                             }
                         });
                         case true: return 'The car has already been reserved, choose another car or dates.';

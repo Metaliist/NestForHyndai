@@ -9,7 +9,7 @@ export class CarService {
     //The method checks the existence of the table, via a query
     private async CheckTable() {
         return client
-            .query(Requests.find(e => e.req == 'Check creation'))
+            .query(Requests.find(e => e.req == 'Check creation')) 
             .catch(async e => {
                 if (e.table == undefined) {
                     await this.CreateTable();
