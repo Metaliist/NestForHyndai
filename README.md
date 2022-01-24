@@ -50,9 +50,9 @@ $ npm run start
 Отправляем
 Типы запроса и ответ на них: 
 - Post('check') 
-    в ответ если все ок, вернет: Rezerv / Not Rezerv.
+    в ответ если все ок, вернет: Rezerv / Not Rezerv + стоимость аренды
 - Post('reserve') 
-    в ответ если все ок, вернет: (I have reserved a car, everything is fine) / (The car has already been reserved, choose another car or dates).
+    в ответ если все ок, вернет: (I have reserved a car, everything is fine + стоимость аренды) / (The car has already been reserved, choose another car or dates).
 - Post
     Если дата начала брони или конца выподает на выходные то вернет: The beginning or end of the lease should fall on weekdays
     Если дата не валидная: Dates are not correctly selected
@@ -61,7 +61,7 @@ $ npm run start
 ```
 ## Описание работы
 ```bash
-    Сервис принимает Post и Get запросы и работает с бд.
+    Сервис принимает Post запросы и работает с бд.
 
 ```
 ## Пример работы для бронирования авто. 
