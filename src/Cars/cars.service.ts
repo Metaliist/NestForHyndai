@@ -15,9 +15,8 @@ export class CarService {
             .then(res => {
                 if (Object.values(res.rows[0])[0] == 0) {
                     return { err: false, errtext: '', rezerve: false }
-                } else {
-                    return { err: false, errtext: '', rezerve: true }
                 }
+                return { err: false, errtext: '', rezerve: true }
             })
             .catch(e => {
                 throw new Error(e);
@@ -28,9 +27,6 @@ export class CarService {
         if (!this.wtableService.checkID(idCar)) {
             return "The identification car is specified more than there is in the park"
         }
-        let d = this.convertDate(dateStart, dateEnd);
-        dateStart = d.dateStart;
-        dateEnd = d.dateEnd;
         console.log(idCar)
         console.log(typeof idCar)
         if (dateStart < dateEnd) {
@@ -43,22 +39,19 @@ export class CarService {
                     await this.calcPrise(dateStart, dateEnd).then(price => {
                         Price = price;
                     });
-                    switch (res) {
-                        case false: return await this.rezerved(idCar, dateStart, dateEnd, Price).then((res) => {
-                            if (res) {
+                    if (res) {
+                        return await this.rezerved(idCar, dateStart, dateEnd, Price).then((_res) => {
+                            if (_res) {
                                 return 'I have reserved a car, everything is fine.Rental price: ' + Price;
                             }
                         });
-                        case true: return 'The car has already been reserved, choose another car or dates.';
                     }
+                    return 'The car has already been reserved, choose another car or dates.';
                 });
             }
-            else {
-                return 'The beginning or end of the lease should fall on weekdays';
-            }
-        } else {
-            return 'Dates are not correctly selected';
+            return 'The beginning or end of the lease should fall on weekdays';
         }
+        return 'Dates are not correctly selected';
     }
     //Method for insert to table
     private async rezerved(idCar: number, dateStart: Date, dateEnd: Date, price: number) {
@@ -77,9 +70,6 @@ export class CarService {
         if (!this.wtableService.checkID(idCar)) {
             return "The identification car is specified more than there is in the park"
         }
-        let d = this.convertDate(dateStart, dateEnd);
-        dateStart = d.dateStart;
-        dateEnd = d.dateEnd;
         let price: number = 0;
         if (dateStart < dateEnd) {
             if ((+dateEnd - +dateStart) / (60 * 60 * 24 * 1000) > 30) {
@@ -90,19 +80,15 @@ export class CarService {
                     await this.calcPrise(dateStart, dateEnd).then(_price => {
                         price = _price;
                     });
-                    switch (res) {
-                        case false: return "Not Rezerv. Rental price: " + price;
-                        case true: return "Rezerv";
+                    if (res) {
+                        return "Rezerv";
                     }
+                    return "Not Rezerv. Rental price: " + price;
                 });
             }
-            else {
-                return 'The beginning or end of the lease should fall on weekdays';
-            }
-        } else {
-            return 'Dates are not correctly selected';
+            return 'The beginning or end of the lease should fall on weekdays';
         }
-
+        return 'Dates are not correctly selected';
     }
     //The upper method for checking the status
     private async getStatusCar(idCar: number, dateStart: Date, dateEnd: Date) {
@@ -136,15 +122,4 @@ export class CarService {
             })
     }
     //Method for converting a date from a string or from a number
-    private convertDate(dateStart: Date, dateEnd: Date) {
-        if
-            (
-            (typeof (dateStart) === 'string' || typeof (dateStart) === 'number') ||
-            (typeof (dateEnd) === 'string' || typeof (dateEnd) === 'number')
-        ) {
-            dateStart = new Date(dateStart);
-            dateEnd = new Date(dateEnd);
-        }
-        return { dateStart: dateStart, dateEnd: dateEnd }
-    }
 }

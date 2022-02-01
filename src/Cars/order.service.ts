@@ -15,15 +15,11 @@ export class OrderService {
         await this.wtableService.checkTable() //Table validation method
             .catch(err => { throw new Error(err); });
         await this.wtableService.checkTablePrice().catch(err => { throw new Error(err); });
-        let Month;
-        if (typeof (_orderMonth.month) === "string" || typeof (_orderMonth.month) === 'number') {
-            Month = new Date(_orderMonth.month);
-        }
+        let Month = new Date(_orderMonth.year, _orderMonth.month);;
         if (_orderMonth.all) {
             return this.orderMonth(Month);
-        } else {
-            return this.orderMonthID(_orderMonth.idCar, Month);
         }
+        return this.orderMonthID(_orderMonth.idCar, Month);
     }
     //Method for reporting the average car load by id for the month
     async orderMonthID(idCar: number, month: Date) {
