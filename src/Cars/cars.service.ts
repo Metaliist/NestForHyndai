@@ -105,7 +105,7 @@ export class CarService {
     }
     //Method for calculating rental days
     private async calcPrise(dateStart: Date, dateEnd: Date) {
-        let day = ((+dateEnd - +dateStart) / (60 * 60 * 24 * 1000));
+        let day: number = ((+dateEnd - +dateStart) / (60 * 60 * 24 * 1000));
         return await this.sumPrice(day);
 
     }
