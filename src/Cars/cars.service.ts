@@ -7,21 +7,21 @@ import { WTableService } from './wtable.service';
 export class CarService {
 
     private readonly car: Car = new Car(0, 0, new Date('2022-01-01'), new Date('2022-01-03'));
-    constructor(private readonly wtableService: WTableService) { }
+    constructor(private readonly wTableService: WTableService) { }
     //The method makes select records from the table and if there is a record, then there is a session, and the car is busy
-    private async checkCar(idCar: number, dateStart: Date, dateEnd: Date): Promise<{ err: boolean; errtext: string; reserve: boolean; }> {
+    private async checkCar(idCar: number, dateStart: Date, dateEnd: Date): Promise<{ err: boolean; errText: string; reserve: boolean; }> {
 
         const res = await pool
             .query(Requests.find(e => e.req == 'Check car'), [idCar, dateStart, dateEnd])
         if (Object.values(res.rows[0])[0] == 0) {
-            return { err: false, errtext: '', reserve: false }
+            return { err: false, errText: '', reserve: false }
         }
-        return { err: false, errtext: '', reserve: true }
+        return { err: false, errText: '', reserve: true }
 
     }
     //The method reserves the car, makes an insert if the car is not occupied and the session satisfies the conditions
-    async rezerveCar(idCar: number, dateStart: Date, dateEnd: Date): Promise<string> {
-        if (!this.wtableService.checkID(idCar)) {
+    async reserveCar(idCar: number, dateStart: Date, dateEnd: Date): Promise<string> {
+        if (!this.wTableService.checkID(idCar)) {
             return "The identification car is specified more than there is in the park"
         }
         console.log(idCar)
@@ -36,7 +36,7 @@ export class CarService {
                     Price = price;
                 });
                 if (!await this.getStatusCar(idCar, dateStart, dateEnd)) {
-                    if (await this.rezerved(idCar, dateStart, dateEnd, Price)) {
+                    if (await this.reserved(idCar, dateStart, dateEnd, Price)) {
                         return 'I have reserved a car, everything is fine.Rental price: ' + Price;
                     }
                 }
@@ -47,9 +47,9 @@ export class CarService {
         return 'Dates are not correctly selected';
     }
     //Method for insert to table
-    private async rezerved(idCar: number, dateStart: Date, dateEnd: Date, price: number): Promise<boolean> {
+    private async reserved(idCar: number, dateStart: Date, dateEnd: Date, price: number): Promise<boolean> {
         const res = await pool
-            .query(Requests.find(e => e.req == 'Rezerve car'), [idCar, dateStart, dateEnd, price])
+            .query(Requests.find(e => e.req == 'Reserve car'), [idCar, dateStart, dateEnd, price])
             .catch(err => {
                 console.log(err)
                 throw new Error(err);
@@ -59,7 +59,7 @@ export class CarService {
     }
     //Method for getting the status of the car, reserved or not
     async getStatus(idCar: number, dateStart: Date, dateEnd: Date): Promise<string> {
-        if (!this.wtableService.checkID(idCar)) {
+        if (!this.wTableService.checkID(idCar)) {
             return "The identification car is specified more than there is in the park"
         }
         let price: number = 0;
@@ -71,9 +71,9 @@ export class CarService {
                 price = await this.calcPrise(dateStart, dateEnd);
                 let res = await this.getStatusCar(idCar, dateStart, dateEnd);
                 if (res) {
-                    return "Rezerv";
+                    return "Reserve";
                 }
-                return "Not Rezerv. Rental price: " + price;
+                return "Not Reserve. Rental price: " + price;
             }
             return 'The beginning or end of the lease should fall on weekdays';
         }
@@ -82,23 +82,23 @@ export class CarService {
     //The upper method for checking the status
     private async getStatusCar(idCar: number, dateStart: Date, dateEnd: Date): Promise<boolean> {
 
-        await this.wtableService.checkTable()
+        await this.wTableService.checkTable()
             .catch(err => { throw new Error(err); });
-        await this.wtableService.checkTablePrice().catch(err => { throw new Error(err); });
+        await this.wTableService.checkTablePrice().catch(err => { throw new Error(err); });
         let res: boolean = (await this.checkCar(idCar, dateStart, dateEnd)).reserve;
         console.log(res)
         return res;
     }
-    //Method for calculating rental daysы
+    //Method for calculating rental days
     private async calcPrise(dateStart: Date, dateEnd: Date): Promise<number> {
         let day: number = ((+dateEnd - +dateStart) / (60 * 60 * 24 * 1000));
         return await this.sumPrice(day);
 
     }
     //Method for calculating the rental cost
-    private async sumPrice(countday: number): Promise<number> {
+    private async sumPrice(countDay: number): Promise<number> {
         const res = await pool
-            .query(Requests.find(e => e.req == 'Sum Price'), [countday])
+            .query(Requests.find(e => e.req == 'Sum Price'), [countDay])
             .catch(err => {
                 console.log(err)
                 throw new Error(err);

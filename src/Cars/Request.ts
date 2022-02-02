@@ -26,7 +26,7 @@ export const req = [{
     text: `Select Count(*) from cars where "IDCar" = $1 and ($2 Between "DateStart" and "DateEnd" + interval '3 day' or $3:: date + interval '3 day' >= "DateStart")`
 },
 {
-    req: 'Rezerve car',
+    req: 'Reserve car',
     text: `INSERT INTO public.cars(
         "IDCar", "DateStart", "DateEnd","Price")
         VALUES ($1,$2,$3,$4);`

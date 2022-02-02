@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CarService } from './cars.service';
 import { pool } from './connectDB'
-import { OrderMonth } from './dto/ordermount.dto';
+import { OrderMonth } from './dto/order-mount.dto';
 import { req as Requests } from './Request'
 import { WTableService } from './wtable.service';
 @Injectable()
 export class OrderService {
-    constructor(private readonly carService: CarService, private readonly wtableService: WTableService) { }
+    constructor(private readonly carService: CarService, private readonly wTableService: WTableService) { }
     //Top method for reports
-    async orderm(_orderMonth: OrderMonth) {
-        await this.wtableService.checkTable() //Table validation method
+    async orderM(_orderMonth: OrderMonth) {
+        await this.wTableService.checkTable() //Table validation method
             .catch(err => { throw new Error(err); });
-        await this.wtableService.checkTablePrice().catch(err => { throw new Error(err); });
+        await this.wTableService.checkTablePrice().catch(err => { throw new Error(err); });
         let Month = new Date(_orderMonth.year, _orderMonth.month);;
         if (_orderMonth.all) {
             return this.orderMonth(Month);
@@ -21,7 +21,7 @@ export class OrderService {
     //Method for reporting the average car load by id for the month
     async orderMonthID(idCar: number, month: Date) {
         console.log(month)
-        if (!this.wtableService.checkID(idCar)) {
+        if (!this.wTableService.checkID(idCar)) {
             return "The identification car is specified more than there is in the park"
         }
         let req = Requests.find(e => e.req == 'Order month');

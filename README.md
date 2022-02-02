@@ -113,7 +113,7 @@ idCar нужно только если берем статистику по од
 Запрос к бд один и тот же.
 Если запрос не нашел записей удовл условиям, то возвращаем 0%, иначе возвращаем что вернул select
 ```
-![Gif]()   
+![Gif](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/_Order.gif)   
 
 ## Автор
 - Author - [Titov Maxim]
