@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CarService } from './cars.service';
-import { client } from './connectDB'
+import { pool as client } from './connectDB'
 import { OrderMonth } from './dto/ordermount.dto';
 import { req as Requests } from './Request'
 import { WTableService } from './wtable.service';
@@ -9,9 +9,10 @@ export class OrderService {
     constructor(private readonly carService: CarService, private readonly wtableService: WTableService) { }
     //Top method for reports
     async orderm(_orderMonth: OrderMonth) {
-        if (!client._connected) {
-            client.connect(); //Connecting to the database
-        }
+        //if (!client._connected) {
+       //     client.connect(); //Connecting to the database
+       //     console.log(client)
+       // }
         await this.wtableService.checkTable() //Table validation method
             .catch(err => { throw new Error(err); });
         await this.wtableService.checkTablePrice().catch(err => { throw new Error(err); });

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { client } from './connectDB'
+import { pool as client } from './connectDB'
 import { req as Requests } from './Request'
 @Injectable()
 export class WTableService {

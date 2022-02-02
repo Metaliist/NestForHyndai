@@ -1,9 +1,12 @@
-const { Client } = require('pg')
-export const client = new Client({
-    user: 'test',
+import * as pg from 'pg';
+export const pool = new pg.Pool({
+  //  user: 'test',
     host: 'localhost',
     database: 'NestForHyndai',
-    password: 'test',
-    port: 5432,
-    log: console.log
+    max: 20,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000,
+   // password: 'test',
+    port: 5432
 })
+pool.connect();
