@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CarService } from './cars.service';
-import { pool as client } from './connectDB'
+import { pool } from './connectDB'
 import { OrderMonth } from './dto/ordermount.dto';
 import { req as Requests } from './Request'
 import { WTableService } from './wtable.service';
@@ -9,10 +9,6 @@ export class OrderService {
     constructor(private readonly carService: CarService, private readonly wtableService: WTableService) { }
     //Top method for reports
     async orderm(_orderMonth: OrderMonth) {
-        //if (!client._connected) {
-       //     client.connect(); //Connecting to the database
-       //     console.log(client)
-       // }
         await this.wtableService.checkTable() //Table validation method
             .catch(err => { throw new Error(err); });
         await this.wtableService.checkTablePrice().catch(err => { throw new Error(err); });
@@ -30,42 +26,33 @@ export class OrderService {
         }
         let req = Requests.find(e => e.req == 'Order month');
         req.text = req.text.replace('1=1', '"IDCar" = $2');
-        return await client
+
+        let res = await pool
             .query(req, [month, idCar])
-            .then((res) => {
-                let _res;
-                if (res.rows.length > 0) {
-                    _res = res.rows[0];
-                }
-                else {
-                    _res = { [req.ret[0]]: idCar, [req.ret[1]]: 0 }
-                }
-                return _res;
-            })
             .catch(err => {
                 console.log(err)
                 throw new Error(err);
             })
+        if (res.rows.length > 0) {
+            return res.rows[0];
+        }  
+        return { [req.ret[0]]: idCar, [req.ret[1]]: 0 }
+
     }
     //Method for reporting the average load of all cars for the month
     async orderMonth(month: Date) {
         let req = Requests.find(e => e.req == 'Order month');
         req.text = req.text.replace('"IDCar" = $2', '1=1');
-        return await client
+        let res = await pool
             .query(req, [month])
-            .then((res) => {
-                let _res;
-                if (res.rows.length > 0) {
-                    _res = res.rows;
-                }
-                else {
-                    _res = { [req.ret[1]]: 0 }
-                }
-                return _res;
-            })
             .catch(err => {
                 console.log(err)
                 throw new Error(err);
             })
+        if (res.rows.length > 0) {
+            return res.rows;
+        }
+            return{ [req.ret[1]]: 0 }
+
     }
 }
