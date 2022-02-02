@@ -1,28 +1,39 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { CarService } from './cars.service';
+import { OrderMonth } from './dto/order-month.dto';
+import { ReserveCarsDto as ReserveCarsDto } from './dto/reservecars.dto';
 import { OrderService } from './order.service';
-import { OrderMonth } from './dto/ordermount.dto';
-import { RezerveCarsDto } from './dto/reservecars.dto'
 @ApiTags('cars')
 @Controller()
 export class CarsController {
-    constructor(private readonly carService: CarService, private readonly orderService: OrderService) { }
+  constructor(
+    private readonly carService: CarService,
+    private readonly orderService: OrderService,
+  ) {}
 
-    @Post('order')
-    @ApiBody({ type: OrderMonth })
-    getorder(@Body() ordermonth: OrderMonth) {
-        return this.orderService.orderm(ordermonth);
-    }
-    @Post('check')
-    @ApiBody({ type: RezerveCarsDto })
-    getHello(@Body() reserveCarsDto: RezerveCarsDto) {
-        return this.carService.getStatus(reserveCarsDto.idCar, reserveCarsDto.dateStart, reserveCarsDto.dateEnd);
-    }
-    @Post('reserve')
-    @ApiBody({ type: RezerveCarsDto })
-    postHello(@Body() reservecarsdto: RezerveCarsDto) {
-        //console.log(reservecarsdto)
-        return this.carService.rezerveCar(reservecarsdto.idCar, reservecarsdto.dateStart, reservecarsdto.dateEnd);
-    }
+  @Post('order')
+  @ApiBody({ type: OrderMonth })
+  getOrder(@Body() ordermonth: OrderMonth) {
+    return this.orderService.orderM(ordermonth);
+  }
+  @Post('check')
+  @ApiBody({ type: ReserveCarsDto })
+  getHello(@Body() reserveCarsDto: ReserveCarsDto) {
+    return this.carService.getStatus(
+      reserveCarsDto.idCar,
+      reserveCarsDto.dateStart,
+      reserveCarsDto.dateEnd,
+    );
+  }
+  @Post('reserve')
+  @ApiBody({ type: ReserveCarsDto })
+  postHello(@Body() reserveCarsDto: ReserveCarsDto) {
+    //console.log(reservecarsdto)
+    return this.carService.reserveCar(
+      reserveCarsDto.idCar,
+      reserveCarsDto.dateStart,
+      reserveCarsDto.dateEnd,
+    );
+  }
 }
