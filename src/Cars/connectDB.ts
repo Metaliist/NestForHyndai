@@ -9,4 +9,4 @@ export const pool = new pg.Pool({
    // password: 'test',
     port: 5432
 })
-pool.connect();
+//pool.connect();

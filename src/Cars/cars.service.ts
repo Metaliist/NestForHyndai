@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Car } from './cars';
 import { pool as client } from './connectDB'
-client.connect();
 import { req as Requests } from './Request'
 import { WTableService } from './wtable.service';
 @Injectable()
