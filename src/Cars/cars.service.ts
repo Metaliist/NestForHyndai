@@ -78,13 +78,11 @@ export class CarService {
                     await this.calcPrise(dateStart, dateEnd).then(_price => {
                         price = _price;
                     });
-                    await client.end();
                     if (res) {
                         return "Rezerv";
                     }
                     return "Not Rezerv. Rental price: " + price;
                 });
-                await client.end();
                 return res;
             }
             return 'The beginning or end of the lease should fall on weekdays';
