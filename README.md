@@ -2,7 +2,7 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 ```bash
-Техническое задание для Hyndai Mobility.
+Техническое задание для Hyundai Mobility.
 Данный сервис позволяет бронировать автомобиль.
 И собирать отчет по средней загрузки автомобилей за месяц.
 ```
