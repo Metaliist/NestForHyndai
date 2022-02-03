@@ -37,8 +37,7 @@ $ npm run start
 ## Swagger
 ![Image](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/swagger.png) 
 
-## PostMan
-![Image](https://raw.githubusercontent.com/Metaliist/NestForHyndai/master/image/postman_.png)       
+## PostMan    
 ```bash
 -В строке адресс пишем - [localhost:3000/]
 В тело запроса помещаем JSON (Для резервирования или проверки статуса)
